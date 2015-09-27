@@ -26,7 +26,11 @@ public class GetInfo {
             {
                 switch (args[i]) {
                     case "info":
-                        SystemInfo();
+                        RunProcess runProcess = new RunProcess(args[i]);
+                        Thread thrd = new Thread(runProcess);
+                        thrd.start();
+                        
+                        //SystemInfo();
                         break;
                     case "loop":{
                         SystemInfo();
@@ -90,7 +94,7 @@ public class GetInfo {
         System.out.println(ts.toString());
         
     }
-
+    
     public static void HelloVaak() {
         String s;
         System.out.println("/----------------- Running Loop -----------------\\" );
@@ -168,6 +172,5 @@ public class GetInfo {
         ts.setEnd("....");
         System.out.println("\\----------------- Stop Input Command - Time: "+ ts.toString() +"-----------------/" );
     }
-    
 }
 
