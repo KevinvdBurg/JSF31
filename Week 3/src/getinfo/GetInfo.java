@@ -25,12 +25,8 @@ public class GetInfo {
             for( int i = 0; i < args.length; i++)
             {
                 switch (args[i]) {
-                    case "info":
-                        RunProcess runProcess = new RunProcess(args[i]);
-                        Thread thrd = new Thread(runProcess);
-                        thrd.start();
-                        
-                        //SystemInfo();
+                    case "info":                        
+                        SystemInfo();
                         break;
                     case "loop":{
                         SystemInfo();
@@ -49,10 +45,10 @@ public class GetInfo {
                             SystemInfo();
                             break;
                         }
-                    case "firefox":
+                    /*case "firefox":
                         RunProgress();
                         SystemInfo();
-                        break;
+                        break; */
                     case "command":
                         InputRunProgress();
                         SystemInfo();
@@ -79,8 +75,17 @@ public class GetInfo {
                         System.out.println("help");
                         break;
                     default:
-                        System.out.println("help voor alle opties" );
+                        //System.out.println("help voor alle opties" );
                         //System.out.println(args[0]);
+                        
+                        RunProcess runProcess = new RunProcess(args[i]);
+                        Thread thread = new Thread(runProcess);
+                        thread.start();
+                        while (runProcess.p.isAlive())
+                        {
+                            
+                        }
+                        thread.interrupt();
                         break;
                 }
             }
