@@ -32,11 +32,11 @@ public class KochManager implements Observer{
         koch.setLevel(nxt);
         edges.clear();
         TimeStamp timeStamp = new TimeStamp();
-        timeStamp.setBegin("Start Drawing");
+        timeStamp.setBegin("Start Calc");
         koch.generateLeftEdge();
         koch.generateBottomEdge();
         koch.generateRightEdge();
-        timeStamp.setEnd("Fractal berekend");      
+        timeStamp.setEnd("End Calc");      
         drawEdges();
         application.setTextCalc(timeStamp.toString());
         application.setTextNrEdges(String.valueOf(koch.getNrOfEdges()));
