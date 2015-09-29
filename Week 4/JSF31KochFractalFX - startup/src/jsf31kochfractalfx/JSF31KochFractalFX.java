@@ -5,6 +5,8 @@
 package jsf31kochfractalfx;
 
 import calculate.*;
+import java.util.Observable;
+import java.util.Observer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author Nico Kuijpers
  */
-public class JSF31KochFractalFX extends Application {
+public class JSF31KochFractalFX extends Application{
     
     // Zoom and drag
     private double zoomTranslateX = 0.0;
@@ -304,5 +306,11 @@ public class JSF31KochFractalFX extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+        JSF31KochFractalFX op = new JSF31KochFractalFX();
+        KochManager kochManager = new KochManager(op);
+        //KochFractal kochFractal = new KochFractal();
+        //kochFractal.addObserver(op);
+        
     }
+
 }
