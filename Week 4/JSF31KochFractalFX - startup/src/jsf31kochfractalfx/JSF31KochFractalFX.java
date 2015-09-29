@@ -5,8 +5,6 @@
 package jsf31kochfractalfx;
 
 import calculate.*;
-import java.util.Observable;
-import java.util.Observer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,7 +22,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Nico Kuijpers
+ * @author Kevin van der Burg en Milton van de Sanden
  */
 public class JSF31KochFractalFX extends Application{
     

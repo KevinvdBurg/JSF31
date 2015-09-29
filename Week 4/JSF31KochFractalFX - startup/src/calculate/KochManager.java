@@ -13,7 +13,7 @@ import timeutil.TimeStamp;
 
 /**
  *
- * @author kvdb
+ * @author Kevin van der Burg en Milton van de Sanden
  */
 public class KochManager implements Observer{
     
@@ -58,5 +58,4 @@ public class KochManager implements Observer{
         //application.drawEdge((Edge)arg);
         edges.add((Edge)arg);
     }
-
 }

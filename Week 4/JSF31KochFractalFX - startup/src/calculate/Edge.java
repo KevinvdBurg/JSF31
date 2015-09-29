@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 
 /**
  *
- * @author Peter Boots
+ * @author Kevin van der Burg en Milton van de Sanden
  */
 public class Edge {
     public double X1, Y1, X2, Y2;

@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 
 /**
  *
- * @author Peter Boots
+ * @author Kevin van der Burg en Milton van de Sanden
  */
 public class KochFractal extends Observable {
 
