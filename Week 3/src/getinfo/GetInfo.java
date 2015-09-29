@@ -25,16 +25,43 @@ public class GetInfo {
             for( int i = 0; i < args.length; i++)
             {
                 switch (args[i]) {
-                    case "info":                        
-                        SystemInfo();
-                        break;
-                    case "loop":{
-                        SystemInfo();
-                        HelloVaak( );
-                        break;
+                    case "info":
+                        RunProcess runProcess = new RunProcess(args[i]);
+                        Thread thread = new Thread(runProcess);
+                        thread.start();
+                        while (runProcess.p.isAlive())
+                        {
+                            
                         }
-                    case "loopgc":{
-                        SystemInfo();
+                        thread.interrupt();
+
+                        //SystemInfo();
+                        break;
+                    case "loop":
+                        RunProcess runProcess2 = new RunProcess(args[i]);
+                        Thread thread2 = new Thread(runProcess2);
+                        thread2.start();
+                        while (runProcess2.p.isAlive())
+                        {
+                            
+                        }
+                        thread2.interrupt();
+                        
+                        //SystemInfo();
+                        //HelloVaak( );
+                        break;
+                    case "loopgc":
+                        RunProcess runProcess3 = new RunProcess(args[i]);
+                        Thread thread3 = new Thread(runProcess3);
+                        thread3.start();
+                        while (runProcess3.p.isAlive())
+                        {
+                            
+                        }
+                        thread3.interrupt();
+                        break;
+                        
+                        /*SystemInfo();
                         String s;
                         System.out.println("/----------------- Running Loop -----------------\\" );
                         for (int j = 0; j < 1000000; j++) {
@@ -45,26 +72,67 @@ public class GetInfo {
                             SystemInfo();
                             break;
                         }
-                    /*case "firefox":
-                        RunProgress();
-                        SystemInfo();
-                        break; */
+                        */
+                    case "firefox":
+                        RunProcess runProcess4 = new RunProcess(args[i]);
+                        Thread thread4 = new Thread(runProcess4);
+                        thread4.start();
+                        while (runProcess4.p.isAlive())
+                        {
+                            
+                        }
+                        thread4.interrupt();
+                        
+                        //RunProgress();
+                        //SystemInfo();
+                        break;
                     case "command":
-                        InputRunProgress();
-                        SystemInfo();
+                        RunProcess runProcess5 = new RunProcess(args[i]);
+                        Thread thread5 = new Thread(runProcess5);
+                        thread5.start();
+                        while (runProcess5.p.isAlive())
+                        {
+                            
+                        }
+                        thread5.interrupt();
+
+                        
+                        //InputRunProgress();
+                        //SystemInfo();
                         break;
                     case "all":{
-                            SystemInfo();
-                            HelloVaak( );
-                            RunGC();
-                            SystemInfo();
-                            RunProgress();
-                            SystemInfo();
-                            InputRunProgress();
-                            SystemInfo();
-                            break;
+                        RunProcess runProcess6 = new RunProcess(args[i]);
+                        Thread thread6 = new Thread(runProcess6);
+                        thread6.start();
+                        while (runProcess6.p.isAlive())
+                        {
+                            
+                        }
+                        thread6.interrupt();
+
+                        /*
+                        SystemInfo();
+                        HelloVaak( );
+                        RunGC();
+                        SystemInfo();
+                        RunProgress();
+                        SystemInfo();
+                        InputRunProgress();
+                        SystemInfo();
+                        */
+                        break;
                         }
                     case "help":
+                        RunProcess runProcess7 = new RunProcess(args[i]);
+                        Thread thread7 = new Thread(runProcess7);
+                        thread7.start();
+                        while (runProcess7.p.isAlive())
+                        {
+                            
+                        }
+                        thread7.interrupt();
+                        
+                        /*
                         System.out.println("----------------- Mogelijkheden -----------------" );
                         System.out.println("info");
                         System.out.println("loop");
@@ -73,23 +141,13 @@ public class GetInfo {
                         System.out.println("command");
                         System.out.println("all");
                         System.out.println("help");
+                        */
                         break;
                     default:
-                        //System.out.println("help voor alle opties" );
-                        //System.out.println(args[0]);
-                        
-                        RunProcess runProcess = new RunProcess(args[i]);
-                        Thread thread = new Thread(runProcess);
-                        thread.start();
-                        while (runProcess.p.isAlive())
-                        {
-                            
-                        }
-                        thread.interrupt();
-                        break;
+                        System.out.println("help voor alle opties" );
+                        System.out.println(args[0]);
                 }
-            }
-             
+            }             
         }
         else{
             System.out.println("help voor alle opties" );
@@ -99,7 +157,8 @@ public class GetInfo {
         System.out.println(ts.toString());
         
     }
-    
+
+    /*
     public static void HelloVaak() {
         String s;
         System.out.println("/----------------- Running Loop -----------------\\" );
@@ -177,5 +236,6 @@ public class GetInfo {
         ts.setEnd("....");
         System.out.println("\\----------------- Stop Input Command - Time: "+ ts.toString() +"-----------------/" );
     }
+    */
 }
 
