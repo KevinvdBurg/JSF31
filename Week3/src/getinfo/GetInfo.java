@@ -27,11 +27,11 @@ public class GetInfo {
                 RunProcess runProcess = new RunProcess(args[i]);
                 Thread thread = new Thread(runProcess);
                 thread.start();
-                
-                while(runProcess.p.isAlive())
+
+                /*while(thread.runProcess.p.isAlive())
                 {
                     
-                }
+                }*/
                 thread.interrupt();
                 
                 /*
