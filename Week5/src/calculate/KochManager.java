@@ -33,6 +33,13 @@ public class KochManager implements Observer{
         edges.clear();
         TimeStamp timeStamp = new TimeStamp();
         timeStamp.setBegin("Start Calc");
+        
+        
+        /*
+        koch.setLevel(nxt);
+        edges.clear();
+        TimeStamp timeStamp = new TimeStamp();
+        timeStamp.setBegin("Start Calc");
         koch.generateLeftEdge();
         koch.generateBottomEdge();
         koch.generateRightEdge();
@@ -40,6 +47,7 @@ public class KochManager implements Observer{
         drawEdges();
         application.setTextCalc(timeStamp.toString());
         application.setTextNrEdges(String.valueOf(koch.getNrOfEdges()));
+                */
     }
     
     public void drawEdges() {
