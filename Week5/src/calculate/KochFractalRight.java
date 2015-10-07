@@ -11,13 +11,46 @@ import javafx.scene.paint.Color;
  *
  * @author Kevin van der Burg en Milton van de Sanden
  */
-public class KochFractal extends Observable {
+public class KochFractalRight extends Observable implements Runnable{
 
-    private int level = 1;      // The current level of the fractal
-    private int nrOfEdges = 3;  // The number of edges in the current level of the fractal
+    private int level;      // The current level of the fractal
+    private int nrOfEdges;  // The number of edges in the current level of the fractal
     private float hue;          // Hue value of color for next edge
     private boolean cancelled;  // Flag to indicate that calculation has been cancelled 
+    
+    /*
+    private double ax;
+    private double ay;
+    private double bx;
+    private double by;
+    private int n;
+    */
+    
+    private boolean done;
 
+
+    public KochFractalRight(int level, int nrOfEdges)
+    {
+        this.level = level;
+        this.nrOfEdges = nrOfEdges;
+        done  = false;
+    }
+    
+    @Override
+    public void run()
+    {
+        while(true)
+        {
+            generateRightEdge();
+            
+            if(Thread.currentThread().isInterrupted() && this.done)
+            {
+                System.out.println("right interupted");
+                break;
+            }
+        }
+    }
+    
     private void drawKochEdge(double ax, double ay, double bx, double by, int n) {
         if (!cancelled) {
             if (n == 1) {
@@ -38,24 +71,53 @@ public class KochFractal extends Observable {
                 drawKochEdge((midabx + bx) / 2, (midaby + by) / 2, bx, by, n - 1);
             }
         }
+        done = true;
     }
-
-    public void  generateLeftEdge() {
-        hue = 0f;
-        cancelled = false;
-        drawKochEdge(0.5, 0.0, (1 - Math.sqrt(3.0) / 2.0) / 2, 0.75, level);
+    
+    /*
+    public double getAx()
+    {
+        return ax;
     }
-
-    public void generateBottomEdge() {
-        hue = 1f / 3f;
-        cancelled = false;
-        drawKochEdge((1 - Math.sqrt(3.0) / 2.0) / 2, 0.75, (1 + Math.sqrt(3.0) / 2.0) / 2, 0.75, level);
+    
+    public double getAy()
+    {
+        return ay;
     }
+    
+    public double getBx()
+    {
+        return bx;
+    }
+    
+    public double getBy()
+    {
+        return by;
+    }
+    
+    public int getN()
+    {
+        return n;
+    }
+    */
 
     public void generateRightEdge() {
-        hue = 2f / 3f;
-        cancelled = false;
-        drawKochEdge((1 + Math.sqrt(3.0) / 2.0) / 2, 0.75, 0.5, 0.0, level);
+        if(!this.done)
+        {        
+            hue = 2f / 3f;
+            cancelled = false;
+        
+            /*
+            ax = (1 + Math.sqrt(3.0) / 2.0) / 2;
+            ay = 0.75;
+            bx = 0.5;
+            by = 0.0;
+            n = level;
+            */
+            
+            drawKochEdge((1 + Math.sqrt(3.0) / 2.0) / 2, 0.75, 0.5, 0.0, level);
+            
+        }
     }
     
     public void cancel() {

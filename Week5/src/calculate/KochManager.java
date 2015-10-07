@@ -33,7 +33,32 @@ public class KochManager implements Observer{
         edges.clear();
         TimeStamp timeStamp = new TimeStamp();
         timeStamp.setBegin("Start Calc");
+
+        KochFractalLeft kochFractalLeft = new KochFractalLeft(koch.getLevel(), koch.getNrOfEdges());
+        Thread threadLeft = new Thread(kochFractalLeft);
+        kochFractalLeft.addObserver(this);
         
+        KochFractalBottom kochFractalBottom = new KochFractalBottom(kochFractalLeft.getLevel(), kochFractalLeft.getNrOfEdges());
+        Thread threadBottom = new Thread(kochFractalBottom);
+        kochFractalBottom.addObserver(this);
+        
+        KochFractalRight kochFractalRight = new KochFractalRight(kochFractalBottom.getLevel(), kochFractalBottom.getNrOfEdges());
+        Thread threadRight = new Thread(kochFractalRight);
+        kochFractalRight.addObserver(this);
+        
+        threadLeft.start();
+        threadLeft.interrupt();
+        
+        threadBottom.start();
+        threadBottom.interrupt();
+        
+        threadRight.start();
+        threadRight.interrupt();
+        
+        timeStamp.setEnd("End Calc");
+        drawEdges();
+        application.setTextCalc(timeStamp.toString());
+        application.setTextNrEdges(String.valueOf(koch.getNrOfEdges()));
         
         /*
         koch.setLevel(nxt);
