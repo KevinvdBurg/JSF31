@@ -56,8 +56,9 @@ public class KochFractalLeft extends Observable implements Runnable{
             if (n == 1) {
                 hue = hue + 1.0f / nrOfEdges;
                 Edge e = new Edge(ax, ay, bx, by, Color.hsb(hue*360.0, 1.0, 1.0));
+                
                 this.setChanged();
-                this.notifyObservers(e);
+                this.notifyObservers(e);                    
             } else {
                 double angle = Math.PI / 3.0 + Math.atan2(by - ay, bx - ax);
                 double distabdiv3 = Math.sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)) / 3;
@@ -101,7 +102,7 @@ public class KochFractalLeft extends Observable implements Runnable{
     }
     */
 
-    public void  generateLeftEdge() {
+    public synchronized void  generateLeftEdge() {
         if(!this.done)
         {        
             hue = 0f;
@@ -145,4 +146,10 @@ public class KochFractalLeft extends Observable implements Runnable{
     public int getNrOfEdges() {
         return nrOfEdges;
     }
+    
+    /*public boolean isDone()
+    {
+        return this.done;
+    }*/
+
 }

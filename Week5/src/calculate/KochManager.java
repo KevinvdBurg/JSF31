@@ -47,12 +47,11 @@ public class KochManager implements Observer{
         kochFractalRight.addObserver(this);
         
         threadLeft.start();
-        threadLeft.interrupt();
-        
         threadBottom.start();
-        threadBottom.interrupt();
-        
         threadRight.start();
+        
+        threadLeft.interrupt();
+        threadBottom.interrupt();
         threadRight.interrupt();
         
         timeStamp.setEnd("End Calc");
@@ -87,8 +86,8 @@ public class KochManager implements Observer{
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        //application.drawEdge((Edge)arg);
+    public synchronized void update(Observable o, Object arg) {
         edges.add((Edge)arg);
+        //application.drawEdge((Edge)arg);
     }
 }
