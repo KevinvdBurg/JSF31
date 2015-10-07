@@ -20,6 +20,7 @@ public class KochManager implements Observer{
     private JSF31KochFractalFX application;
     private KochFractal koch;
     private ArrayList<Edge> edges;
+    public int count = 0;
     
     public KochManager(JSF31KochFractalFX application) {
         this.application = application;
@@ -34,16 +35,16 @@ public class KochManager implements Observer{
         TimeStamp timeStamp = new TimeStamp();
         timeStamp.setBegin("Start Calc");
 
-        KochFractalLeft kochFractalLeft = new KochFractalLeft(koch.getLevel(), koch.getNrOfEdges());
-        Thread threadLeft = new Thread(kochFractalLeft);
+        KochFractalLeft kochFractalLeft = new KochFractalLeft(koch.getLevel(), koch.getNrOfEdges(), this);
+        Thread threadLeft = new Thread(kochFractalLeft, "LeftFractel");
         kochFractalLeft.addObserver(this);
         
-        KochFractalBottom kochFractalBottom = new KochFractalBottom(kochFractalLeft.getLevel(), kochFractalLeft.getNrOfEdges());
-        Thread threadBottom = new Thread(kochFractalBottom);
+        KochFractalBottom kochFractalBottom = new KochFractalBottom(koch.getLevel(), koch.getNrOfEdges(), this);
+        Thread threadBottom = new Thread(kochFractalBottom, "BottomFractel");
         kochFractalBottom.addObserver(this);
         
-        KochFractalRight kochFractalRight = new KochFractalRight(kochFractalBottom.getLevel(), kochFractalBottom.getNrOfEdges());
-        Thread threadRight = new Thread(kochFractalRight);
+        KochFractalRight kochFractalRight = new KochFractalRight(koch.getLevel(), koch.getNrOfEdges(), this);
+        Thread threadRight = new Thread(kochFractalRight, "RightFractel");
         kochFractalRight.addObserver(this);
         
         threadLeft.start();
@@ -55,7 +56,7 @@ public class KochManager implements Observer{
         threadRight.interrupt();
         
         timeStamp.setEnd("End Calc");
-        drawEdges();
+
         application.setTextCalc(timeStamp.toString());
         application.setTextNrEdges(String.valueOf(koch.getNrOfEdges()));
         
@@ -74,15 +75,15 @@ public class KochManager implements Observer{
                 */
     }
     
-    public void drawEdges() {
+    public synchronized void drawEdges() {
         application.clearKochPanel();
-        TimeStamp timeStamp = new TimeStamp();
-        timeStamp.setBegin("Start Drawing");
+        
         for(Edge e : edges){
             application.drawEdge(e);
         }
-        timeStamp.setEnd("End Drawing");
-        application.setTextDraw(timeStamp.toString());
+        
+        
+        
     }
 
     @Override
@@ -90,4 +91,24 @@ public class KochManager implements Observer{
         edges.add((Edge)arg);
         //application.drawEdge((Edge)arg);
     }
+    
+    public synchronized void increaseCount(){
+        count++;
+        System.out.print(count);
+        
+        if (count == 3)
+        {
+            synchronized(this){
+               TimeStamp timeStamp = new TimeStamp();
+               timeStamp.setBegin("Start Drawing");
+               
+               application.requestDrawEdges(); 
+                
+               timeStamp.setEnd("End Drawing");
+               application.setTextDraw(timeStamp.toString());
+               count = 0;
+            }
+        }
+    }
+    
 }

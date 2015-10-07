@@ -17,6 +17,7 @@ public class KochFractalRight extends Observable implements Runnable{
     private int nrOfEdges;  // The number of edges in the current level of the fractal
     private float hue;          // Hue value of color for next edge
     private boolean cancelled;  // Flag to indicate that calculation has been cancelled 
+    private KochManager kochManager;
     
     /*
     private double ax;
@@ -29,10 +30,11 @@ public class KochFractalRight extends Observable implements Runnable{
     private boolean done;
 
 
-    public KochFractalRight(int level, int nrOfEdges)
+    public KochFractalRight(int level, int nrOfEdges,  KochManager aThis)
     {
         this.level = level;
         this.nrOfEdges = nrOfEdges;
+        this.kochManager = aThis;
         done  = false;
     }
     
@@ -42,10 +44,10 @@ public class KochFractalRight extends Observable implements Runnable{
         while(true)
         {
             generateRightEdge();
-            
+   
             if(Thread.currentThread().isInterrupted() && this.done)
             {
-                System.out.println("right interupted");
+//                System.out.println("right interupted");
                 break;
             }
         }
@@ -117,7 +119,7 @@ public class KochFractalRight extends Observable implements Runnable{
             */
             
             drawKochEdge((1 + Math.sqrt(3.0) / 2.0) / 2, 0.75, 0.5, 0.0, level);
-            
+            kochManager.increaseCount();
         }
     }
     
