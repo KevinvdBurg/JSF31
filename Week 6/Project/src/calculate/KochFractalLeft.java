@@ -52,13 +52,13 @@ public class KochFractalLeft extends Observable implements Runnable{
 		try {
 			cyclicBarrier.await();
 		} catch (InterruptedException e) {
-			System.out.println("Service one interrupted!");
+			System.out.println("Generate Left interrupted!");
 			e.printStackTrace();
 		} catch (BrokenBarrierException e) {
-			System.out.println("Service one interrupted!");
+			System.out.println("Generate Left interrupted!");
 			e.printStackTrace();
 		}
-		System.out.println("The wait is over, lets complete Service One!");
+		System.out.println("The wait is over, lets complete Generate Left!");
             
 //            if(Thread.currentThread().isInterrupted() && this.done)
 //            {

@@ -54,13 +54,13 @@ public class KochFractalRight extends Observable implements Runnable{
 		try {
 			cyclicBarrier.await();
 		} catch (InterruptedException e) {
-			System.out.println("Service one interrupted!");
+			System.out.println("Generate Right interrupted!");
 			e.printStackTrace();
 		} catch (BrokenBarrierException e) {
-			System.out.println("Service one interrupted!");
+			System.out.println("Generate Right interrupted!");
 			e.printStackTrace();
 		}
-		System.out.println("The wait is over, lets complete Service One!");
+		System.out.println("The wait is over, lets complete Generate Right!");
 //            generateRightEdge();
 //   
 //            if(Thread.currentThread().isInterrupted() && this.done)

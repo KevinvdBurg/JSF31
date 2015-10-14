@@ -60,10 +60,10 @@ public class KochFractalBottom extends Observable implements Runnable{
 		try {
 			cyclicBarrier.await();
 		} catch (InterruptedException e) {
-			System.out.println("Service one interrupted!");
+			System.out.println("Generate Bottom interrupted!");
 			e.printStackTrace();
 		} catch (BrokenBarrierException e) {
-			System.out.println("Service one interrupted!");
+			System.out.println("Generate Bottom interrupted!");
 			e.printStackTrace();
 		}
 		System.out.println("The wait is over, lets complete Service One!");
