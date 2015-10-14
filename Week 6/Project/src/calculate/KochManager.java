@@ -148,6 +148,9 @@ public class KochManager implements Observer{
         //application.drawEdge((Edge)arg);
     }
     
+    
+    
+    
     public synchronized void increaseCount(){
         count++;
         System.out.print(count);
