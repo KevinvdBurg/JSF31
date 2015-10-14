@@ -49,18 +49,23 @@ public class KochManager implements Observer{
         CalctimeStamp.setBegin("Start Calc");
 
         KochFractalLeft kochFractalLeft = new KochFractalLeft(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
+        pool.submit(kochFractalLeft);
         
-        Thread threadLeft = new Thread(kochFractalLeft, "LeftFractel");
+        //Thread threadLeft = new Thread(kochFractalLeft, "LeftFractel");
         kochFractalLeft.addObserver(this);
         
         
         KochFractalBottom kochFractalBottom = new KochFractalBottom(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
-        Thread threadBottom = new Thread(kochFractalBottom, "BottomFractel");
+        pool.submit(kochFractalBottom);
+        
+        //Thread threadBottom = new Thread(kochFractalBottom, "BottomFractel");
         kochFractalBottom.addObserver(this);
         
         
         KochFractalRight kochFractalRight = new KochFractalRight(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
-        Thread threadRight = new Thread(kochFractalRight, "RightFractel");
+        pool.submit(kochFractalRight);
+        
+        //Thread threadRight = new Thread(kochFractalRight, "RightFractel");
         kochFractalRight.addObserver(this);
         
         
@@ -68,19 +73,29 @@ public class KochManager implements Observer{
 //        pool.execute(kochFractalLeft);
 //        pool.execute(kochFractalBottom);
 //        pool.execute(kochFractalRight);
-        threadLeft.start();
-        threadBottom.start();
-        threadRight.start();
-        
-        try {
+        pool.execute(new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+                try {
                 cyclicBarrier.await();
-        } catch (InterruptedException e) {
-                System.out.println("Main Thread interrupted!");
-                e.printStackTrace();
-        } catch (BrokenBarrierException e) {
-                System.out.println("Main Thread interrupted!");
-                e.printStackTrace();
-        }
+                } catch (InterruptedException e) {
+                        System.out.println("Main Thread interrupted!");
+                        e.printStackTrace();
+                } catch (BrokenBarrierException e) {
+                        System.out.println("Main Thread interrupted!");
+                        e.printStackTrace();
+                }
+            }
+        });
+        
+//        threadLeft.start();
+//        threadBottom.start();
+//        threadRight.start();
+        
+        
         System.out.println("Ending both the services at"+new Date());
 
         pool.shutdown();
