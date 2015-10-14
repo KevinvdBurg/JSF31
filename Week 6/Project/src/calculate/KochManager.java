@@ -43,6 +43,7 @@ public class KochManager implements Observer{
         koch.addObserver(this);
         edges = new ArrayList<>();
         CalctimeStamp = new TimeStamp();
+        
         size = 4;
         pool = Executors.newFixedThreadPool(size);
         cyclicBarrier = new CyclicBarrier(size);
@@ -151,11 +152,11 @@ public class KochManager implements Observer{
     public synchronized void drawEdges() {        
        
         updateEdges();
-//        Platform.runLater(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
                 application.clearKochPanel();
                 TimeStamp timeStamp = new TimeStamp();
                 timeStamp.setBegin("Start Drawing");
@@ -164,8 +165,8 @@ public class KochManager implements Observer{
                 }
                 timeStamp.setEnd("End Drawing");
                 application.setTextDraw(timeStamp.toString());     
-//            }
-//        });
+            }
+        });
     }
 
     @Override
