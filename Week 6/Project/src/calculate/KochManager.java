@@ -13,6 +13,7 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javafx.application.Platform;
 import jsf31kochfractalfx.JSF31KochFractalFX;
 import timeutil.TimeStamp;
 
@@ -123,15 +124,22 @@ public class KochManager implements Observer{
                 */
     }
     
-    public synchronized void drawEdges() {
-        application.clearKochPanel();
-        TimeStamp timeStamp = new TimeStamp();
-        timeStamp.setBegin("Start Drawing");
-        for(Edge e : edges){
-            application.drawEdge(e);
-        }
-        timeStamp.setEnd("End Drawing");
-        application.setTextDraw(timeStamp.toString());
+    public synchronized void drawEdges() {        
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                application.clearKochPanel();
+                TimeStamp timeStamp = new TimeStamp();
+                timeStamp.setBegin("Start Drawing");
+                for(Edge e : edges){
+                    application.drawEdge(e);
+                }
+                timeStamp.setEnd("End Drawing");
+                application.setTextDraw(timeStamp.toString());     
+            }
+        });
     }
 
     @Override
