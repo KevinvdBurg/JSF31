@@ -4,8 +4,10 @@
  */
 package calculate;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
 import javafx.scene.paint.Color;
 
@@ -13,7 +15,7 @@ import javafx.scene.paint.Color;
  *
  * @author Kevin van der Burg en Milton van de Sanden
  */
-public class KochFractalLeft extends Observable implements Runnable{
+public class KochFractalLeft /*extends Observable*/ implements /*Runnable*/ Callable<ArrayList<Edge>>{
 
     private int level;      // The current level of the fractal
     private int nrOfEdges;  // The number of edges in the current level of the fractal
@@ -21,6 +23,8 @@ public class KochFractalLeft extends Observable implements Runnable{
     private boolean cancelled;  // Flag to indicate that calculation has been cancelled 
     private KochManager kochManager;
     private final CyclicBarrier cyclicBarrier;
+    
+    private ArrayList<Edge> edges = new ArrayList<>();
     
     /*
     private double ax;
@@ -41,6 +45,36 @@ public class KochFractalLeft extends Observable implements Runnable{
         done = false;
     }
     
+    @Override
+    public ArrayList<Edge> call()
+    {
+//        while(true)
+//        {
+                System.out.println("Generate Left Fractel...");
+                generateLeftEdge();
+		System.out.println("Generate Left has finished its work... waiting for others...");
+		try {
+			cyclicBarrier.await();
+		} catch (InterruptedException e) {
+			System.out.println("Generate Left interrupted!");
+			e.printStackTrace();
+		} catch (BrokenBarrierException e) {
+			System.out.println("Generate Left interrupted!");
+			e.printStackTrace();
+		}
+		System.out.println("The wait is over, lets complete Generate Left!");
+                
+                return edges;
+            
+//            if(Thread.currentThread().isInterrupted() && this.done)
+//            {
+////                System.out.println("Bottom interupted");
+//                break;
+//            }
+//        }        
+    }
+    
+    /*
     @Override
     public void run()
     {
@@ -67,6 +101,7 @@ public class KochFractalLeft extends Observable implements Runnable{
 //            }
 //        }
     }
+    */
     
     public void drawKochEdge(double ax, double ay, double bx, double by, int n) {
         if (!cancelled) {
@@ -74,8 +109,10 @@ public class KochFractalLeft extends Observable implements Runnable{
                 hue = hue + 1.0f / nrOfEdges;
                 Edge e = new Edge(ax, ay, bx, by, Color.hsb(hue*360.0, 1.0, 1.0));
                 
-                this.setChanged();
-                this.notifyObservers(e);                    
+                edges.add(e);
+                
+                //this.setChanged();
+                //this.notifyObservers(e);                    
             } else {
                 double angle = Math.PI / 3.0 + Math.atan2(by - ay, bx - ax);
                 double distabdiv3 = Math.sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)) / 3;
