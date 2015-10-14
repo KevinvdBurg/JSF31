@@ -6,8 +6,13 @@
 package calculate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import jsf31kochfractalfx.JSF31KochFractalFX;
 import timeutil.TimeStamp;
 
@@ -22,6 +27,9 @@ public class KochManager implements Observer{
     private ArrayList<Edge> edges;
     public int count = 0;
     private TimeStamp CalctimeStamp;
+    CyclicBarrier cyclicBarrier;
+    public int size;
+    private ExecutorService pool;
     
     public KochManager(JSF31KochFractalFX application) {
         this.application = application;
@@ -29,33 +37,52 @@ public class KochManager implements Observer{
         koch.addObserver(this);
         edges = new ArrayList<>();
         CalctimeStamp = new TimeStamp();
+        size = 4;
+        pool = Executors.newFixedThreadPool(size);
+        cyclicBarrier = new CyclicBarrier(size);
     }
     
-    public void changeLevel(int nxt) {
+    public void changeLevel(int nxt) throws BrokenBarrierException {
         koch.setLevel(nxt);
         edges.clear();
         
         CalctimeStamp.setBegin("Start Calc");
 
-        KochFractalLeft kochFractalLeft = new KochFractalLeft(koch.getLevel(), koch.getNrOfEdges(), this);
+        KochFractalLeft kochFractalLeft = new KochFractalLeft(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
         Thread threadLeft = new Thread(kochFractalLeft, "LeftFractel");
         kochFractalLeft.addObserver(this);
+        //pool.execute(threadLeft);
         
-        KochFractalBottom kochFractalBottom = new KochFractalBottom(koch.getLevel(), koch.getNrOfEdges(), this);
+        KochFractalBottom kochFractalBottom = new KochFractalBottom(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
         Thread threadBottom = new Thread(kochFractalBottom, "BottomFractel");
         kochFractalBottom.addObserver(this);
+        //pool.execute(threadBottom);
         
-        KochFractalRight kochFractalRight = new KochFractalRight(koch.getLevel(), koch.getNrOfEdges(), this);
+        KochFractalRight kochFractalRight = new KochFractalRight(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
         Thread threadRight = new Thread(kochFractalRight, "RightFractel");
         kochFractalRight.addObserver(this);
+        //pool.execute(threadBottom);
+        
+        System.out.println("Starting both the services at"+new Date());
         
         threadLeft.start();
         threadBottom.start();
         threadRight.start();
         
-        threadLeft.interrupt();
-        threadBottom.interrupt();
-        threadRight.interrupt();
+        try {
+                cyclicBarrier.await();
+        } catch (InterruptedException e) {
+                System.out.println("Main Thread interrupted!");
+                e.printStackTrace();
+        } catch (BrokenBarrierException e) {
+                System.out.println("Main Thread interrupted!");
+                e.printStackTrace();
+        }
+        System.out.println("Ending both the services at"+new Date());
+//        
+//        threadLeft.interrupt();
+//        threadBottom.interrupt();
+//        threadRight.interrupt();
         application.setTextNrEdges(String.valueOf(koch.getNrOfEdges()));
         
 
