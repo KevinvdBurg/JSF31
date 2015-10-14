@@ -49,22 +49,25 @@ public class KochManager implements Observer{
         CalctimeStamp.setBegin("Start Calc");
 
         KochFractalLeft kochFractalLeft = new KochFractalLeft(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
+        
         Thread threadLeft = new Thread(kochFractalLeft, "LeftFractel");
         kochFractalLeft.addObserver(this);
-        //pool.execute(threadLeft);
+        
         
         KochFractalBottom kochFractalBottom = new KochFractalBottom(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
         Thread threadBottom = new Thread(kochFractalBottom, "BottomFractel");
         kochFractalBottom.addObserver(this);
-        //pool.execute(threadBottom);
+        
         
         KochFractalRight kochFractalRight = new KochFractalRight(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
         Thread threadRight = new Thread(kochFractalRight, "RightFractel");
         kochFractalRight.addObserver(this);
-        //pool.execute(threadBottom);
+        
         
         System.out.println("Starting both the services at"+new Date());
-        
+//        pool.execute(kochFractalLeft);
+//        pool.execute(kochFractalBottom);
+//        pool.execute(kochFractalRight);
         threadLeft.start();
         threadBottom.start();
         threadRight.start();
@@ -79,10 +82,12 @@ public class KochManager implements Observer{
                 e.printStackTrace();
         }
         System.out.println("Ending both the services at"+new Date());
-//        
+
+        pool.shutdown();
 //        threadLeft.interrupt();
 //        threadBottom.interrupt();
 //        threadRight.interrupt();
+        
         application.setTextNrEdges(String.valueOf(koch.getNrOfEdges()));
         
 

@@ -54,19 +54,19 @@ public class KochFractalBottom extends Observable implements Runnable{
     {
 //        while(true)
 //        {
-                System.out.println("Generate Bottom Fractel...");
-                generateBottomEdge();
-		System.out.println("Generate Bottom has finished its work... waiting for others...");
-		try {
-			cyclicBarrier.await();
-		} catch (InterruptedException e) {
-			System.out.println("Generate Bottom interrupted!");
-			e.printStackTrace();
-		} catch (BrokenBarrierException e) {
-			System.out.println("Generate Bottom interrupted!");
-			e.printStackTrace();
-		}
-		System.out.println("The wait is over, lets complete Service One!");
+            System.out.println("Generate Bottom Fractel...");
+            generateBottomEdge();
+            System.out.println("Generate Bottom has finished its work... waiting for others...");
+            try {
+                    cyclicBarrier.await();
+            } catch (InterruptedException e) {
+                    System.out.println("Generate Bottom interrupted!");
+                    e.printStackTrace();
+            } catch (BrokenBarrierException e) {
+                    System.out.println("Generate Bottom interrupted!");
+                    e.printStackTrace();
+            }
+            System.out.println("The wait is over, lets complete Generate Bottom!");
 //            generateBottomEdge();
 //            
 //            if(Thread.currentThread().isInterrupted() && this.done)
