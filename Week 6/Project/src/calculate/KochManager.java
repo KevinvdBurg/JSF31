@@ -58,27 +58,29 @@ public class KochManager implements Observer{
         futureLeft = pool.submit(kochFractalLeft);
         
         //Thread threadLeft = new Thread(kochFractalLeft, "LeftFractel");
-        //kochFractalLeft.addObserver(this);
+        kochFractalLeft.addObserver(this);
         
         
         KochFractalBottom kochFractalBottom = new KochFractalBottom(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
         futureBottom = pool.submit(kochFractalBottom);
         
         //Thread threadBottom = new Thread(kochFractalBottom, "BottomFractel");
-        //kochFractalBottom.addObserver(this);
+        kochFractalBottom.addObserver(this);
         
         
         KochFractalRight kochFractalRight = new KochFractalRight(koch.getLevel(), koch.getNrOfEdges(), this, cyclicBarrier);
         futureRight = pool.submit(kochFractalRight);
         
         //Thread threadRight = new Thread(kochFractalRight, "RightFractel");
-        //kochFractalRight.addObserver(this);
+        kochFractalRight.addObserver(this);
         
         
         System.out.println("Starting both the services at"+new Date());
 //        pool.execute(kochFractalLeft);
 //        pool.execute(kochFractalBottom);
 //        pool.execute(kochFractalRight);
+        
+        
         pool.execute(new Runnable()
         {
             @Override
@@ -106,7 +108,7 @@ public class KochManager implements Observer{
         
         System.out.println("Ending both the services at"+new Date());
 
-        pool.shutdown();
+//        pool.shutdown();
 //        threadLeft.interrupt();
 //        threadBottom.interrupt();
 //        threadRight.interrupt();
@@ -147,13 +149,13 @@ public class KochManager implements Observer{
     
     
     public synchronized void drawEdges() {        
-       updateEdges();
-        
-        Platform.runLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
+       
+        updateEdges();
+//        Platform.runLater(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
                 application.clearKochPanel();
                 TimeStamp timeStamp = new TimeStamp();
                 timeStamp.setBegin("Start Drawing");
@@ -162,8 +164,8 @@ public class KochManager implements Observer{
                 }
                 timeStamp.setEnd("End Drawing");
                 application.setTextDraw(timeStamp.toString());     
-            }
-        });
+//            }
+//        });
     }
 
     @Override

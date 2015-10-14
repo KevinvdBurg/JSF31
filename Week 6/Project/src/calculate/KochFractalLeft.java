@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
  *
  * @author Kevin van der Burg en Milton van de Sanden
  */
-public class KochFractalLeft /*extends Observable*/ implements /*Runnable*/ Callable<ArrayList<Edge>>{
+public class KochFractalLeft extends Observable implements /*Runnable*/ Callable<ArrayList<Edge>>{
 
     private int level;      // The current level of the fractal
     private int nrOfEdges;  // The number of edges in the current level of the fractal
@@ -111,8 +111,8 @@ public class KochFractalLeft /*extends Observable*/ implements /*Runnable*/ Call
                 
                 edges.add(e);
                 
-                //this.setChanged();
-                //this.notifyObservers(e);                    
+                this.setChanged();
+                this.notifyObservers(e);                    
             } else {
                 double angle = Math.PI / 3.0 + Math.atan2(by - ay, bx - ax);
                 double distabdiv3 = Math.sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)) / 3;
