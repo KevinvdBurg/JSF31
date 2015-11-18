@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
- * @author Eric
+ * @author Kevin van der Burg
  */
 public class RW {
 

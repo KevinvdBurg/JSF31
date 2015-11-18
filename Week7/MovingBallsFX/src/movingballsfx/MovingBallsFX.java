@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Nico Kuijpers
+ * @author Kevin van der Burg
  */
 public class MovingBallsFX extends Application {
     
@@ -110,7 +110,8 @@ public class MovingBallsFX extends Application {
         CheckBox cb = checkBoxArray[index];
         int y = (int) cb.getLayoutY() + radius;
         if (cb.isSelected() && index < 5) { 
-            // Reader selected: new PURPLE ball
+            
+            // Reader selected
             Ball b = new Ball(minX, maxX, minCsX, maxCsX, y, balColor1, "reader");
             ballArray[index] = b;
             Thread t = new Thread(new BallRunnable(b, readWrite));
@@ -118,16 +119,19 @@ public class MovingBallsFX extends Application {
             circleArray[index].setVisible(true);
             t.start();
             
-        } else if (cb.isSelected() && index >= 5) { 
-            // Writer selected: new ORANGE ball
+        } 
+        
+        else if (cb.isSelected() && index >= 5) { 
+            // Writer selected
             Ball b = new Ball(minX, maxX, minCsX, maxCsX, y, balColor2, "writer");
             ballArray[index] = b;
             Thread t = new Thread(new BallRunnable(b, readWrite));
             threadArray[index] = t;
             circleArray[index].setVisible(true);
             t.start();
+            
         } else {
-            // Reader or writer deselected: remove ball
+            
             threadArray[index].interrupt();
             threadArray[index] = null;
             ballArray[index] = null;
@@ -171,7 +175,7 @@ public class MovingBallsFX extends Application {
         launch(args);
     }
     
-    // Update circles each 20 ms
+    // Update circles each 10 ms
     private class DrawRunnable implements Runnable {
         @Override
         public void run() {

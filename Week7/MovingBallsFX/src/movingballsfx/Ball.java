@@ -3,6 +3,11 @@ package movingballsfx;
 import java.util.Random;
 import javafx.scene.paint.Color;
 
+
+/**
+ *
+ * @author Kevin van der Burg
+ */
 public class Ball {
 
     private String name;

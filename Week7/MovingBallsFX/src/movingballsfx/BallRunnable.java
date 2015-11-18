@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 /**
  *
- * @author Peter Boots
+ * @author Kevin van der Burg
  */
 public class BallRunnable implements Runnable {
 
